@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {AppBar, makeStyles, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Box, makeStyles, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {CAPTAINS_MODULE, PLANETS_MODULE} from "../utils/constants";
+import {useCaptain} from "../utils/CaptainContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,10 +15,15 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    titleBox: {
+        flexDirection: "column",
+        flexGrow: 1
+    }
 }));
 
-const MenuBar = (props) => {
+const MenuBar = ({selectModule, currentCaptain}) => {
     const classes = useStyles();
+    const {state: {captain}} = useCaptain();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -29,7 +35,6 @@ const MenuBar = (props) => {
     };
 
     const handleMenuSelection = (selection) => {
-        const {selectModule} = props;
         selectModule(selection);
         handleClose();
     }
@@ -37,9 +42,16 @@ const MenuBar = (props) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" className={classes.title}>
-                    Planetary explorer
-                </Typography>
+                <Box className={classes.titleBox}>
+                    <Typography variant="h6">
+                        Planetary explorer
+                    </Typography>
+                    <Typography variant="h9">
+                        Current captain: {!captain ? "No selected captain" : captain.name}
+                    </Typography>
+                </Box>
+
+
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
                             onClick={handleClick}>
                     <MenuIcon/>

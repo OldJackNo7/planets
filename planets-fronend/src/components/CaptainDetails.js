@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CaptainDetails = ({captain, onChangeCaptain, onClose}) => {
+const CaptainDetails = ({captain, onChangeCaptain, onClose, selectCaptain}) => {
     const [avatar, setAvatar] = useState(captain?.img || AVAILABLE_AVATARS[0]);
     const [avatarSelection, setAvatarSelection] = useState(false);
     const [name, setName] = useState(captain?.name || "");
@@ -71,6 +71,10 @@ const CaptainDetails = ({captain, onChangeCaptain, onClose}) => {
                     onClick={handleChangeCaptain}>
                 {captain?._id ? "Update Captain" : "Add Captain"}
             </Button>
+            {captain?._id && <Button variant="contained" color="primary"
+                                    onClick={selectCaptain}>
+                Select Captain
+            </Button>}
             <Fab color="secondary" aria-label="Close" className={classes.fab} onClick={onClose}>
                 <ArrowBackIcon/>
             </Fab>

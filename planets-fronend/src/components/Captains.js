@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import * as PropTypes from "prop-types";
 import {useSnackbar} from "notistack";
 import CaptainDetails from "./CaptainDetails";
+import {useCaptain} from "../utils/CaptainContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,6 +33,7 @@ Alert.propTypes = {
 };
 const Captains = (props) => {
     const classes = useStyles();
+    const {dispatch, state: {captain}} = useCaptain();
     const {enqueueSnackbar} = useSnackbar();
     const [data, setData] = useState([]);
     const [selectedCaptain, setSelectedCaptain] = useState(null);
@@ -86,6 +88,8 @@ const Captains = (props) => {
             if (data.status === true) {
                 if (id) {
                     enqueueSnackbar('Captain updated successfully! <3', {variant: "success"});
+                    if(id === captain._id)
+                        dispatch({type: "changeCaptain", captain: newCaptain});
                 } else {
                     enqueueSnackbar('Captain added successfully! <3', {variant: "success"});
                 }
@@ -101,11 +105,17 @@ const Captains = (props) => {
         })
     }
 
+    const changeSelectedCaptain = () => {
+        // selectCaptain(selectedCaptain);
+        dispatch({type: "changeCaptain", captain: selectedCaptain});
+        onCloseCaptainDetails();
+    }
+
     if (newCaptain) {
         return <CaptainDetails onClose={onCloseCaptainDetails} onChangeCaptain={onChangeCaptain}/>
     } else if (selectedCaptain) {
         return <CaptainDetails captain={selectedCaptain} onClose={onCloseCaptainDetails}
-                               onChangeCaptain={onChangeCaptain}/>
+                               onChangeCaptain={onChangeCaptain} selectCaptain={changeSelectedCaptain}/>
     }
 
     return (
