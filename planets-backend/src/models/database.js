@@ -1,9 +1,6 @@
-
 const {
     DB_URL
 } = process.env;
-
-
 
 const {MongoClient} = require("mongodb");
 

@@ -13,7 +13,7 @@ module.exports = {
 
         let {id} = req.params;
 
-        let data = await userModel.findOne({where: {id}});
+        let data = await userModel.search({where: {id}});
 
         if(!data)
             throw {code: status.BAD_REQUEST, message: 'User not found'};
@@ -21,13 +21,13 @@ module.exports = {
         res.json({status: true, message: 'Returning user', data});
     },
     async getUsers(req, res){
-        let data = await userModel.findAll();
+        let data = await userModel.getAll();
 
         res.json({status: true, message: 'Returning users', data});
     },
     async newUser(req, res){
-        if(!has(req.params, ['name', 'email']))
-            throw {code: status.BAD_REQUEST, message: 'You must specify the name and email'};
+        // if(!has(req.params, ['name', 'email']))
+        //     throw {code: status.BAD_REQUEST, message: 'You must specify the name and email'};
 
         let { name, email } = req.body;
         
@@ -41,7 +41,7 @@ module.exports = {
 
         let { id, name, email } = req.body;
     
-        await userModel.updateUser({name, email}, {where:{id}});
+        await userModel.update({name, email}, {where:{id}});
 
         res.json({status: true, message: 'User updated'});
     },
@@ -51,7 +51,7 @@ module.exports = {
 
         let { id } = req.params;
 
-        await userModel.destroy({where: {id}});
+        await userModel.delete({where: {id}});
 
         res.json({status: true, message: 'User deleted'});
     }
