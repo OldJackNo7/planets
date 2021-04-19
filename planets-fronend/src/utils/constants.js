@@ -9,4 +9,4 @@ export const EN_ROUTE = "EN ROUTE";
 export const AVAILABLE_STATUSES = [TODO, OK, NOT_OK, EN_ROUTE];
 export const BACKEND_URL = "http://localhost:3001";
 export const CAPTAINS_API = "/api/captains";
-export const PLANETS_API = "/apli/planets";
+export const PLANETS_API = "/api/planets";
