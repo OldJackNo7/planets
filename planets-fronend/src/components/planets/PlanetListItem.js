@@ -87,7 +87,7 @@ const PlanetListItem = ({planet, onClick, captainList}) => {
         </Box>
         <Box className={classes.descriptionBox}>
             <Typography className={classes.description}>
-                {planet.description ? '"' + planet.description + '"' : "No description yet..."}
+                <i>{planet.description ? '"' + planet.description + '"' : "No description yet..."}</i>
             </Typography>
             <Typography className={classes.captain}>
                 <b>by captain:</b> <u>{foundCaptain.name}</u>

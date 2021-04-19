@@ -60,7 +60,7 @@ const MenuBar = () => {
                         Planetary explorer
                     </Typography>
                     <Typography variant="h9">
-                        Current captain: {!captain ? "No selected captain" : captain.name}
+                        <b>Captain:</b> {!captain ? "No selected captain" : captain.name}
                     </Typography>
                 </Box>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
