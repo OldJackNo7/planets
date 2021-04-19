@@ -1,12 +1,12 @@
 import React from 'react';
 import {Avatar, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import {getCaptainIcon} from "../../utils/utils";
 
 const CaptainListItem = ({captain, onClick}) => {
-    const icon = require("../resources/captains/" + captain.img).default; //todo: should do something if the icon does not exist
     return <ListItem button onClick={() => onClick(captain)} key={captain._id}>
         <ListItemAvatar>
             <Avatar>
-                <img src={icon} alt={captain.name}/>
+                <img src={getCaptainIcon(captain.img)} alt={captain.name}/>
             </Avatar>
         </ListItemAvatar>
         <ListItemText primary={captain.name} secondary={captain.description}/>

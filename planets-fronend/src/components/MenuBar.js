@@ -4,6 +4,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {CAPTAINS_MODULE, PLANETS_MODULE} from "../utils/constants";
 import {useCaptain} from "../utils/CaptainContext";
+import {useModuleContext} from "../utils/ModuleContext";
+import Captains from "./captains/Captains";
+import Planets from "./planets/Planets";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,9 +24,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MenuBar = ({selectModule, currentCaptain}) => {
+const MenuBar = () => {
     const classes = useStyles();
     const {state: {captain}} = useCaptain();
+    const {dispatch: dispatchModule} = useModuleContext();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -35,7 +39,16 @@ const MenuBar = ({selectModule, currentCaptain}) => {
     };
 
     const handleMenuSelection = (selection) => {
-        selectModule(selection);
+        switch(selection) {
+            case CAPTAINS_MODULE:
+                dispatchModule({type: "newNavigation", module: Captains, props: {}});
+                break;
+            case PLANETS_MODULE:
+                dispatchModule({type: "newNavigation", module: Planets, props: {}});
+                break;
+            default:
+                console.error("Something broke on module selection... it shouldn't tho?"); //todo: treat this case
+        }
         handleClose();
     }
 
@@ -50,8 +63,6 @@ const MenuBar = ({selectModule, currentCaptain}) => {
                         Current captain: {!captain ? "No selected captain" : captain.name}
                     </Typography>
                 </Box>
-
-
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
                             onClick={handleClick}>
                     <MenuIcon/>

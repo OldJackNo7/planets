@@ -5,16 +5,18 @@ const CaptainContext = createContext();
 const captainReducer = (state, action) => {
     switch (action.type) {
         case 'changeCaptain':
-            return {captain: action.captain}
+            return {...state, captain: action.captain}
         case 'unsetCaptain':
-            return {captain: null}
+            return {...state, captain: null}
+        case 'setCaptainList':
+            return {...state, captainList: action.captainList}
         default:
             throw new Error(`Unhandled action type: ${action.type}`)
     }
 }
 
 const CaptainProvider = ({children}) => {
-    const [state, dispatch] = useReducer(captainReducer, {captain: null});
+    const [state, dispatch] = useReducer(captainReducer, {captain: null, captainList: []});
     const value = {state, dispatch}
     return <CaptainContext.Provider value={value}>{children}</CaptainContext.Provider>
 }

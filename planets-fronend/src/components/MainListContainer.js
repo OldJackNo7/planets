@@ -1,19 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import MenuBar from "./MenuBar";
-import {CAPTAINS_MODULE, PLANETS_MODULE} from "../utils/constants";
-import Captains from "./Captains";
-import Planets from "./Planets";
-import {CaptainProvider} from "../utils/CaptainContext";
+import {useModuleContext} from "../utils/ModuleContext";
 
-const MainListContainer = (props) => {
-    const [selectedModule, setSelectedModule] = useState(CAPTAINS_MODULE);
-
-    const moduleToRender = selectedModule === PLANETS_MODULE ? <Planets/> : <Captains/>
+const MainListContainer = () => {
+    const {state: {modulePath, moduleProps}} = useModuleContext();
+    const CurrentModule = modulePath[modulePath.length - 1];
     return (
-        <CaptainProvider>
-            <MenuBar selectModule={setSelectedModule}/>
-            {moduleToRender}
-        </CaptainProvider>
+        <>
+            <MenuBar/>
+            <CurrentModule {...moduleProps[moduleProps.length - 1]}/>
+        </>
     )
 }
 
